@@ -2,11 +2,9 @@ package br.com.fullcycle.hexagonal.application.usecases;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.models.Partner;
-import br.com.fullcycle.hexagonal.services.PartnerService;
-import org.springframework.http.ResponseEntity;
+import br.com.fullcycle.hexagonal.infrastructure.models.Partner;
+import br.com.fullcycle.hexagonal.infrastructure.services.PartnerService;
 
-import java.net.URI;
 import java.util.Objects;
 
 public class CreatePartnerUseCase extends UseCase<CreatePartnerUseCase.Input, CreatePartnerUseCase.Output>{
