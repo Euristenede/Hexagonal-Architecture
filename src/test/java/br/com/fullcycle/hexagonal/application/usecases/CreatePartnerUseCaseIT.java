@@ -28,7 +28,7 @@ public class CreatePartnerUseCaseIT extends IntegrationTest {
     @DisplayName("Deve criar um parceiro")
     public void testCreatePartner() {
         // given
-        final String expectedCnpj = "41536538000100";
+        final String expectedCnpj = "41.536.538/0001-00";
         final String expectedEmail = "john.doe@gmail.com";
         final String expectedName = "John Doe";
 
@@ -49,7 +49,7 @@ public class CreatePartnerUseCaseIT extends IntegrationTest {
     @DisplayName("Não deve cadastrar um parceiro com CNPJ duplicado")
     public void testCreateWithDuplicatedCNPJShouldFail() throws Exception {
         // given
-        final String expectedCnpj = "41536538000100";
+        final String expectedCnpj = "41.536.538/0001-00";
         final String expectedEmail = "john.doe@gmail.com";
         final String expectedName = "John Doe";
         final var expectedError = "Partner already exists";
@@ -69,7 +69,7 @@ public class CreatePartnerUseCaseIT extends IntegrationTest {
     @DisplayName("Não deve cadastrar um parceiro com e-mail duplicado")
     public void testCreateWithDuplicatedEmailShouldFail() throws Exception {
         // given
-        final String expectedCnpj = "41536538000100";
+        final String expectedCnpj = "41.536.538/0001-00";
         final String expectedEmail = "john.doe@gmail.com";
         final String expectedName = "John Doe";
         final var expectedError = "Partner already exists";

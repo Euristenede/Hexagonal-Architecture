@@ -3,18 +3,14 @@ package br.com.fullcycle.hexagonal.application.usecases;
 import br.com.fullcycle.hexagonal.IntegrationTest;
 import br.com.fullcycle.hexagonal.infrastructure.models.Partner;
 import br.com.fullcycle.hexagonal.infrastructure.repositories.PartnerRepository;
-import br.com.fullcycle.hexagonal.infrastructure.services.PartnerService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
 import java.util.UUID;
 
-import static org.mockito.Mockito.when;
 
 public class GetPartnerByIdUseCaseIT extends IntegrationTest {
 
@@ -33,13 +29,13 @@ public class GetPartnerByIdUseCaseIT extends IntegrationTest {
     @DisplayName("Deve obter um parceiro por id")
     public void testGetById() {
         //given
-        final String expectedCnpj = "41536538000100";
+        final String expectedCnpj = "41.536.538/0001-00";
         final String expectedEmail = "john.doe@gmail.com";
         final String expectedName = "John Doe";
 
         final var partner = createPartner(expectedCnpj, expectedEmail, expectedName);
 
-        final var input = new GetPartnerByIdUseCase.Input(partner.getId());
+        final var input = new GetPartnerByIdUseCase.Input(partner.getId().toString());
 
         //when
         final var output = useCase.execute(input).get();
@@ -55,7 +51,7 @@ public class GetPartnerByIdUseCaseIT extends IntegrationTest {
     @DisplayName("Deve obter vazio ao tentar recuperar um parceiro não existente por id")
     public void testGetByIdWithInvalid() {
         //given
-        final var expectedId = UUID.randomUUID().getMostSignificantBits();
+        final var expectedId = UUID.randomUUID().toString();
 
         final var input = new GetPartnerByIdUseCase.Input(expectedId);
 

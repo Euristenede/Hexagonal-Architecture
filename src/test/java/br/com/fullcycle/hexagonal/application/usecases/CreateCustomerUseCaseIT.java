@@ -28,7 +28,7 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     public void testCreateCustomer(){
 
         //given
-        final var expectedCpf = "12345678901";
+        final var expectedCpf = "123.456.789-01";
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
 
@@ -50,7 +50,7 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     public void testCreateWithDuplicatedCPFShouldFail() throws Exception {
 
         //given
-        final var expectedCpf = "12345678901";
+        final var expectedCpf = "123.456.789-01";
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
@@ -71,7 +71,7 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     public void testCreateWithDuplicatedEmailShouldFail() throws Exception {
 
         //given
-        final var expectedCpf = "12345118901";
+        final var expectedCpf = "123.456.789-01";
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
