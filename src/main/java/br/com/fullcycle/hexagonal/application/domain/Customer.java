@@ -1,16 +1,22 @@
-package br.com.fullcycle.hexagonal.application.entities;
+package br.com.fullcycle.hexagonal.application.domain;
+
+import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 
 public class Customer {
-    private CustomerId customerId;
+    private final CustomerId customerId;
     private Name name;
     private Cpf cpf;
     private Email email;
 
     public Customer(final CustomerId customerId, final String name, final String cpf, final String email) {
+        if(customerId == null){
+            throw new ValidationException("Invalid customerId for Customer");
+        }
+
         this.customerId = customerId;
-        this.name = new Name(name);
-        this.cpf = new Cpf(cpf);
-        this.email = new Email(email);
+        this.setName(name);
+        this.setCpf(cpf);
+        this.setEmail(email);
     }
 
     public static Customer create(final String name, final String cpf, final String email){
@@ -31,5 +37,17 @@ public class Customer {
 
     public Email getEmail() {
         return email;
+    }
+
+    private void setName(String name) {
+        this.name = new Name(name);
+    }
+
+    private void setCpf(String cpf) {
+        this.cpf = new Cpf(cpf);
+    }
+
+    private void setEmail(String email) {
+        this.email = new Email(email);
     }
 }

@@ -1,7 +1,7 @@
 package br.com.fullcycle.hexagonal.application.usecases;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
-import br.com.fullcycle.hexagonal.application.entities.Partner;
+import br.com.fullcycle.hexagonal.application.domain.Partner;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.application.repositories.PartnerRepository;
 
@@ -27,7 +27,7 @@ public class CreatePartnerUseCase extends UseCase<CreatePartnerUseCase.Input, Cr
         var partner = partnerRepository.create(Partner.create(input.name, input.cnpj, input.email));
 
         return new Output(
-                partner.getPartnerId().value().toString(),
+                partner.getPartnerId().value(),
                 partner.getCnpj().value(),
                 partner.getEmail().value(),
                 partner.getName().value()

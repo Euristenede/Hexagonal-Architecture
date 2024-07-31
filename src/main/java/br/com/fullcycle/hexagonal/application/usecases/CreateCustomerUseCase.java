@@ -1,7 +1,7 @@
 package br.com.fullcycle.hexagonal.application.usecases;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
-import br.com.fullcycle.hexagonal.application.entities.Customer;
+import br.com.fullcycle.hexagonal.application.domain.Customer;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.application.repositories.CustomerRepository;
 
@@ -25,7 +25,7 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, 
         var customer = customerRepository.create(Customer.create(input.name, input.cpf, input.email));
 
         return new Output(
-                customer.getCustomerId().value().toString(),
+                customer.getCustomerId().value(),
                 customer.getCpf().value(),
                 customer.getEmail().value(),
                 customer.getName().value()

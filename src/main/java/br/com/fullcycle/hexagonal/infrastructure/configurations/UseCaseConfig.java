@@ -28,31 +28,37 @@ public class UseCaseConfig {
 
     @Bean
     public CreateCustomerUseCase createCustomerUseCase(){
+        //TODO: Fix dependency
         return new CreateCustomerUseCase(null);
     }
 
     @Bean
     public CreateEventUseCase createEventUseCase(){
-        return new CreateEventUseCase(eventService, partnerService);
+        //TODO: Fix dependency
+        return new CreateEventUseCase(null, null);
     }
 
     @Bean
     public CreatePartnerUseCase createPartnerUseCase(){
+        //TODO: Fix dependency
         return new CreatePartnerUseCase(null);
     }
 
     @Bean
     public GetCustomerByIdUseCase getCustomerByIdUseCase(){
+        //TODO: Fix dependency
         return new GetCustomerByIdUseCase(null);
     }
 
     @Bean
     public GetPartnerByIdUseCase getPartnerByIdUseCase(){
+        //TODO: Fix dependency
         return new GetPartnerByIdUseCase(null);
     }
 
     @Bean
     public SubscribeCustomerToEventUseCase subscribeCustomerToEventUseCase(){
-        return new SubscribeCustomerToEventUseCase(customerService, eventService);
+        //TODO: Fix dependency
+        return new SubscribeCustomerToEventUseCase(null, null, null);
     }
 }

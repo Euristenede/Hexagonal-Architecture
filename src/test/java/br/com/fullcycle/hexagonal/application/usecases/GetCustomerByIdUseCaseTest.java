@@ -1,7 +1,7 @@
 package br.com.fullcycle.hexagonal.application.usecases;
 
 import br.com.fullcycle.hexagonal.application.InMemoryCustomerRepository;
-import br.com.fullcycle.hexagonal.application.entities.Customer;
+import br.com.fullcycle.hexagonal.application.domain.Customer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class GetCustomerByIdUseCaseTest {
         final var customerRepository = new InMemoryCustomerRepository();
 
         customerRepository.create(aCustomer);
-        final var expectedId = aCustomer.getCustomerId().value().toString();
+        final var expectedId = aCustomer.getCustomerId().value();
         final var input = new GetCustomerByIdUseCase.Input(expectedId);
 
         //when
