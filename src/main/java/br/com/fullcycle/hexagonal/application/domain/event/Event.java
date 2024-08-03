@@ -21,24 +21,45 @@ public class Event {
     private PartnerId partnerId;
     private Set<EventTicket> tickets;
 
-    public Event(final EventId eventId, final String name, final String date, final Integer totalSpots, final PartnerId partnerId) {
-        this(eventId);
+    public Event(
+            final EventId eventId,
+            final String name,
+            final String date,
+            final Integer totalSpots,
+            final PartnerId partnerId,
+            final Set<EventTicket> tickets) {
+        this(eventId, tickets);
         this.setName(name);
         this.setDate(date);
         this.setTotalSpots(totalSpots);
         this.setPartnerId(partnerId);
     }
 
-    private Event(final EventId eventId){
+    private Event(final EventId eventId, final Set<EventTicket> tickets){
         if(eventId == null){
             throw new ValidationException("Invalid eventId for Event");
         }
         this.eventId = eventId;
-        this.tickets = new HashSet<>();
+        this.tickets = tickets != null ? tickets : new HashSet<>(0);
     }
 
-    public static Event create(final String name, final String date, final Integer totalSpots, final Partner partner) {
-        return new Event(EventId.unique(), name, date, totalSpots, partner.getPartnerId());
+    public static Event create(
+            final String name,
+            final String date,
+            final Integer totalSpots,
+            final Partner partner) {
+        return new Event(EventId.unique(), name, date, totalSpots, partner.getPartnerId(), null);
+    }
+
+    public static Event restore(
+            final String id,
+            final String name,
+            final String date,
+            final int totalSpots,
+            final String partnerId,
+            final Set<EventTicket> collect
+    ) {
+        return new Event(EventId.with(id), name, date, totalSpots, PartnerId.with(partnerId), collect);
     }
 
     public Ticket reserveTicket(final CustomerId customerId){
@@ -111,5 +132,16 @@ public class Event {
         this.partnerId = partnerId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return Objects.equals(eventId, event.eventId);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(eventId);
+    }
 }

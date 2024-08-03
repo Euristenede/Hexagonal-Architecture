@@ -1,12 +1,9 @@
 package br.com.fullcycle.hexagonal.application.usecases.partner;
 
 import br.com.fullcycle.hexagonal.IntegrationTest;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.Partner;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.PartnerRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
+import br.com.fullcycle.hexagonal.application.repositories.PartnerRepository;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
@@ -20,8 +17,8 @@ public class GetPartnerByIdUseCaseIT extends IntegrationTest {
     @Autowired
     private PartnerRepository partnerRepository;
 
-    @AfterEach
-    void tearDown() {
+    @BeforeEach
+    void setUp() {
         partnerRepository.deleteAll();
     }
 
@@ -35,13 +32,13 @@ public class GetPartnerByIdUseCaseIT extends IntegrationTest {
 
         final var partner = createPartner(expectedCnpj, expectedEmail, expectedName);
 
-        final var input = new GetPartnerByIdUseCase.Input(partner.getId().toString());
+        final var input = new GetPartnerByIdUseCase.Input(partner.getPartnerId().value());
 
         //when
         final var output = useCase.execute(input).get();
 
         //then
-        Assertions.assertEquals(partner.getId(), output.id());
+        Assertions.assertEquals(partner.getPartnerId().value(), output.id());
         Assertions.assertEquals(expectedCnpj, output.cnpj());
         Assertions.assertEquals(expectedEmail, output.email());
         Assertions.assertEquals(expectedName, output.name());
@@ -63,11 +60,7 @@ public class GetPartnerByIdUseCaseIT extends IntegrationTest {
     }
 
     private Partner createPartner(String cnpj, String email, String name) {
-        var partner = new Partner();
-        partner.setCnpj(cnpj);
-        partner.setEmail(email);
-        partner.setName(name);
-        return partnerRepository.save(partner);
+        return partnerRepository.create(Partner.create(name, cnpj, email));
     }
 
 }

@@ -1,13 +1,10 @@
 package br.com.fullcycle.hexagonal.application.usecases.partner;
 
 import br.com.fullcycle.hexagonal.IntegrationTest;
+import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.Partner;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.PartnerRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import br.com.fullcycle.hexagonal.application.repositories.PartnerRepository;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -19,8 +16,8 @@ public class CreatePartnerUseCaseIT extends IntegrationTest {
     @Autowired
     private PartnerRepository partnerRepository;
 
-    @AfterEach
-    void tearDown() {
+    @BeforeEach
+    void setUp() {
         partnerRepository.deleteAll();
     }
 
@@ -86,11 +83,7 @@ public class CreatePartnerUseCaseIT extends IntegrationTest {
     }
 
     private Partner createPartner(String cnpj, String email, String name) {
-        var partner = new Partner();
-        partner.setCnpj(cnpj);
-        partner.setEmail(email);
-        partner.setName(name);
-        return partnerRepository.save(partner);
+        return partnerRepository.create(Partner.create(name, cnpj, email));
     }
 
 }

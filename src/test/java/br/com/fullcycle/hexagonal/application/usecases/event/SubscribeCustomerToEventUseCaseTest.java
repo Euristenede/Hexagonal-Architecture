@@ -8,7 +8,7 @@ import br.com.fullcycle.hexagonal.application.domain.customer.CustomerId;
 import br.com.fullcycle.hexagonal.application.domain.event.Event;
 import br.com.fullcycle.hexagonal.application.domain.event.EventId;
 import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.TicketStatus;
+import br.com.fullcycle.hexagonal.application.domain.event.ticket.TicketStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,13 +1,10 @@
 package br.com.fullcycle.hexagonal.application.usecases.customer;
 
 import br.com.fullcycle.hexagonal.IntegrationTest;
+import br.com.fullcycle.hexagonal.application.domain.customer.Customer;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.Customer;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.CustomerRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import br.com.fullcycle.hexagonal.application.repositories.CustomerRepository;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CreateCustomerUseCaseIT extends IntegrationTest {
@@ -18,8 +15,8 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @AfterEach
-    void tearDown() {
+    @BeforeEach
+    void setUp() {
         customerRepository.deleteAll();
     }
 
@@ -76,7 +73,7 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
 
-        final var aCustomer = createCustomer("78498512457", expectedEmail, expectedName);
+        final var aCustomer = createCustomer("784.985.124-57", expectedEmail, expectedName);
 
         final var createInput = new CreateCustomerUseCase.Input(expectedCpf, expectedEmail, expectedName);
 
@@ -88,11 +85,7 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     }
 
     private Customer createCustomer(final String cpf, final String email, final String name) {
-        final var aCustomer = new Customer();
-        aCustomer.setCpf(cpf);
-        aCustomer.setEmail(email);
-        aCustomer.setName(name);
-        return customerRepository.save(aCustomer);
+        return customerRepository.create(Customer.create(name, cpf, email));
     }
 
 }

@@ -1,10 +1,13 @@
 package br.com.fullcycle.hexagonal.application.usecases.event;
 
 import br.com.fullcycle.hexagonal.IntegrationTest;
+import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
 import br.com.fullcycle.hexagonal.application.domain.partner.PartnerId;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.Partner;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.EventRepository;
-import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.PartnerRepository;
+import br.com.fullcycle.hexagonal.application.repositories.EventRepository;
+import br.com.fullcycle.hexagonal.application.repositories.PartnerRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.PartnerEntity;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.EventJpaRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.PartnerJpaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +27,7 @@ class CreateEventUseCaseIT extends IntegrationTest {
     private PartnerRepository partnerRepository;
 
     @BeforeEach
-    public void tearDown() {
+    public void setUp() {
         eventRepository.deleteAll();
         partnerRepository.deleteAll();
     }
@@ -34,11 +37,11 @@ class CreateEventUseCaseIT extends IntegrationTest {
     public void testCreateEvent() throws Exception {
 
         // given
-        final var partner = createPartner("41536538000100", "john.doe@gmail.com", "John Doe");
+        final var partner = createPartner("41.536.538/0001-00", "john.doe@gmail.com", "John Doe");
         final var expectedDate = "2021-01-01";
         final var expectedName = "Disney on Ice";
         final var expectedTotalSpots = 10;
-        final var expectedPartnerId = partner.getId().toString();
+        final var expectedPartnerId = partner.getPartnerId().value();
 
         final var createInput =
                 new CreateEventUseCase.Input(expectedDate, expectedName, expectedPartnerId, expectedTotalSpots);
@@ -72,11 +75,7 @@ class CreateEventUseCaseIT extends IntegrationTest {
     }
 
     private Partner createPartner(final String cnpj, final String email, final String name){
-        final var aPartner = new Partner();
-        aPartner.setCnpj(cnpj);
-        aPartner.setEmail(email);
-        aPartner.setName(name);
-        return partnerRepository.save(aPartner);
+        return partnerRepository.create(Partner.create(name, cnpj, email));
     }
 
 }
